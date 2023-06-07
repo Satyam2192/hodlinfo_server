@@ -4,13 +4,13 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
-
+const BASE_url =process.env.BASE_URL;
 
 // Enable CORS
 app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/hodlinfo', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
@@ -50,8 +50,10 @@ app.get('/api/tickers', async (req, res) => {
     }
 
     res.status(200).json({ message: 'Data stored successfully' });
+    console.log(req,"data stored successfully");
   } catch (error) {
     console.error('Error fetching and storing data:', error);
+    console.log(req,"error")
     res.status(500).json({ error: 'An error occurred' });
   }
 });
@@ -71,7 +73,7 @@ app.get('/api/tickers/all', async (req, res) => {
 app.use(express.static('public'));
 
 // Start the server
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port http://localhost:${port}`);
+
+app.listen(BASE_url, () => {
+  console.log(`Server is running`);
 });
