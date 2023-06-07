@@ -4,11 +4,11 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const cors = require('cors');
-const BASE_url =process.env.BASE_URL;
+const PORT =process.env.BASE_URL || 3000;
 
 // Enable CORS
 app.use(cors());
-
+ 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
@@ -74,6 +74,6 @@ app.use(express.static('public'));
 
 // Start the server
 
-app.listen(BASE_url, () => {
-  console.log(`Server is running`);
+app.listen(PORT, () => {
+  console.log(`Server is running at ${PORT}`);
 });
